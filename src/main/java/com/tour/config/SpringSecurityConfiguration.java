@@ -34,7 +34,7 @@ public class SpringSecurityConfiguration {
 	@Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		//http.authorizeHttpRequests((authz) -> authz.anyRequest().authenticated()).httpBasic().authenticationEntryPoint(entryPoint);//always redirects to commence and throws "full authentication is required to access this resource"
-        http.authorizeHttpRequests().anyRequest().authenticated().and().httpBasic().authenticationEntryPoint(entryPoint);;
+        http.authorizeHttpRequests().anyRequest().authenticated().and().httpBasic();//.authenticationEntryPoint(entryPoint);
         return http.build();
     }
 }
