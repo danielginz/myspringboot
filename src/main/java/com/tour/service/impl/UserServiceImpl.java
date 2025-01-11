@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User findByUserName(String name) {//aaa
+	public User findByUserName(String name) {
 		return userRepository.findByUsername(name);
 	}
 }
