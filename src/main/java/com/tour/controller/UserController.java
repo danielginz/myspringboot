@@ -25,13 +25,13 @@ public class UserController {
 	}
 	
 	@RequestMapping("/delete/{id}")
-	//@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String deleteUser(@PathVariable Long id) {
 		return userService.deleteUser(id);
 	}
 	
 	@RequestMapping("/add")
-	//@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public User addUser(@RequestBody User user) {
 		return userService.addUser(user);
 	}
@@ -42,7 +42,7 @@ public class UserController {
 	}
 	
 	@RequestMapping("/list")
-	//@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public List<User> userList(){
 		return userService.userList();
 	}
