@@ -4,15 +4,18 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.tour.model.Address;
 import com.tour.service.AddressService;
 
-@RestController
+//@RestController
+@Controller
 @RequestMapping("/address")
 public class AddressController {
 	private AddressService addressService;
@@ -37,8 +40,16 @@ public class AddressController {
 		return addressService.findOne(id);
 	}
 	
-	@RequestMapping("/list")
+	/*@RequestMapping("/list")
 	public List<Address> addressList() {
 		return addressService.addressList();
+	}*/
+	
+	@GetMapping("/list")
+	public String addressList(Model model ){
+		model.addAttribute("addresses", addressService.addressList());
+		return "/address/list";
 	}
+	
+	
 }

@@ -23,4 +23,4 @@ public class Application {
 
 }
 
-//next video is number 10, check why DELETE in Postman causes "Http Status 401 Full authentication is required to access this resource"
+//next video is number 12

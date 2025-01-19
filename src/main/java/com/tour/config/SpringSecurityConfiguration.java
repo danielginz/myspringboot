@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.firewall.HttpFirewall;
+import org.springframework.security.web.firewall.StrictHttpFirewall;
 
 import com.tour.service.impl.MyUserDetailsService;
 
@@ -34,10 +36,19 @@ public class SpringSecurityConfiguration {
 	@Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests((authz) -> authz.anyRequest().authenticated().and()).httpBasic().authenticationEntryPoint(entryPoint).and().csrf().disable();
-        
+		
 		//without "and().csrf().disable()" you will get "Invalid CSRF token found for http://localhost:9090/myspringboot/user/delete/152"
 		//http.authorizeHttpRequests().anyRequest().authenticated().and().httpBasic().authenticationEntryPoint(entryPoint).and().csrf().disable();
       
         return http.build();
     }
+	
+	//put this method to prevent the following exception 
+	//"org.springframework.security.web.firewall.RequestRejectedException: The request was rejected because the URL contained a potentially malicious String "//"
+	@Bean
+	public HttpFirewall allowDoubleSlashHttpFirewall() {
+	    StrictHttpFirewall firewall = new StrictHttpFirewall();
+	    firewall.setAllowUrlEncodedDoubleSlash(true);
+	    return firewall;
+	}
 }
