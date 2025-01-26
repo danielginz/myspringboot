@@ -18,6 +18,8 @@ ${path}
 				<th>State</th>
 				<th>City</th>
 				<th>User</th>
+				<th>Edit</th>
+				<th>Delete</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -27,6 +29,8 @@ ${path}
 					<td>${address.state}</td>
 					<td>${address.city}</td>
 					<td>${address.user.userName}</td>
+					<td><a href="${path}/address/edit/${address.id}">E</a></td>
+					<td><a href="${path}/address/delete/${address.id}">D</a></td>
 				</tr>
 			</c:forEach>	
 		</tbody>

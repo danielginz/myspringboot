@@ -6,20 +6,24 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tour.model.Role;
 import com.tour.model.User;
+import com.tour.repository.RoleRepository;
 import com.tour.repository.UserRepository;
 import com.tour.service.UserService;
-
-import jakarta.transaction.Transactional;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-	@Autowired
+	//@Autowired
 	private UserRepository userRepository;
 	
-	public UserServiceImpl(UserRepository userRepository) {
+	private RoleRepository roleRepository;
+	
+	@Autowired
+	public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
 		this.userRepository = userRepository;
+		this.roleRepository = roleRepository;
 	}
 
 	@Override
@@ -34,17 +38,25 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User addUser(User user) {
+		Role role = roleRepository.findById(user.getRole().getId()).get();
+		user.setRole(role);
 		return userRepository.save(user);
 	}
 
 	@Override
 	public String deleteUser(Long id) {
 		userRepository.deleteById(id);
-		return "{'message':'User deleted successfully.'}";
+		return "User deleted successfully";
+	}
+	
+	@Override
+	public List<Role> roleList() {
+		return roleRepository.findAll();
 	}
 
 	@Override
 	public User findByUserName(String name) {
 		return userRepository.findByUsername(name);
 	}
+
 }

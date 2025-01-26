@@ -1,5 +1,6 @@
 package com.tour.model;
 
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
@@ -15,7 +16,7 @@ import jakarta.persistence.OneToMany;
 public class User extends AbstractPersistable<Long>{
 	//private static final long serialVersionUID = 1L;
 	private static final long serialVersionUID = 2024_12_19_001L;
-	
+	private transient Long id;
 	private String userId;
 	private String userName;
 	private String password;
@@ -28,6 +29,12 @@ public class User extends AbstractPersistable<Long>{
 	@OneToMany(targetEntity = Address.class, mappedBy = "user", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Address> addresses;
 	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getUserId() {
 		return userId;
 	}
@@ -50,6 +57,7 @@ public class User extends AbstractPersistable<Long>{
 		return role;
 	}
 	public void setRole(Role role) {
+		System.out.println("AAA, setRole()");
 		this.role = role;
 	}
 }

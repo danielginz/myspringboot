@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.tour.model.Address;
+import com.tour.model.User;
 import com.tour.repository.AddressRepository;
 import com.tour.repository.UserRepository;
 import com.tour.service.AddressService;
@@ -33,14 +34,15 @@ public class AddressServiceImpl implements AddressService {
 
 	@Override
 	public Address addAddress(Address address) {
-		address.setUser((userRepository.findById(address.getUserId())).get());
+		User user = userRepository.findById(address.getUser().getId()).get();
+		address.setUser(user);
 		return addressRepository.save(address);
 	}
 
 	@Override
 	public String deleteAddress(Long id) {
 		addressRepository.deleteById(id);
-		return "{'message':'Address deleted successfully.'}";
+		return "Address deleted successfully";
 	}
 	
 	

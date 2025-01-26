@@ -11,7 +11,7 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class Address extends AbstractPersistable<Long>{
 	private static final long serialVersionUID = 2024_12_21_001L;
-	
+	private transient Long id;
 	private String city;
 	private String state;
 	private String country;
@@ -23,6 +23,12 @@ public class Address extends AbstractPersistable<Long>{
 	private User user;
 	//private Optional<User> user;
 	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	
 	public String getCity() {
 		return city;
@@ -49,11 +55,9 @@ public class Address extends AbstractPersistable<Long>{
 		this.userId = userId;
 	}
 	public User getUser() {
-	//public Optional<User> getUser() {
-		//User aaa = user.get();
 		return user;
 	}
-	//public void setUser(Optional<User> user) {
+	
 	public void setUser(User user) {	
 		this.user = user;
 	}

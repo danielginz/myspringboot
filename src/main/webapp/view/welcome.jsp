@@ -12,9 +12,9 @@
 <body>
 ${message}
 ${path}
-<%-- <p><a href="${pageContext.request.contextPath}/user/list">User List</a></p>
-<p><a href="${pageContext.request.contextPath}/address/list">Address List</a></p> --%>
 <p><a href="${path}/user/list">User List</a></p>
+<p><a href="${path}/user/form">Add User</a></p>
 <p><a href="${path}/address/list">Address List</a></p>
+<p><a href="${path}/address/form">Add Address</a></p>
 </body>
 </html>

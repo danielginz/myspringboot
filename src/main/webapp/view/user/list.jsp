@@ -18,6 +18,8 @@ ${path}
 				<th>User Name</th>
 				<th>Password</th>
 				<th>Role</th>
+				<th>Edit</th>
+				<th>Delete</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -27,6 +29,8 @@ ${path}
 				<td>${user.userName}</td>
 				<td>${user.password}</td>
 				<td>${user.role.name}</td>
+				<td><a href="${path}/user/edit/${user.id}">E</a></td>
+				<td><a href="${path}/user/delete/${user.id}">D</a></td>
 			</tr>
 			</c:forEach>
 		</tbody>
