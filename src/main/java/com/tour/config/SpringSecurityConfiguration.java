@@ -10,16 +10,17 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.tour.service.impl.MyUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity//(prePostEnabled = true)
 public class SpringSecurityConfiguration {
 	
-	@Autowired
-	private AuthenticationEntryPoint entryPoint;
+	/*@Autowired
+	private AuthenticationEntryPoint entryPoint;*/
 	
 	@Autowired
 	private MyUserDetailsService userDetailsService;
@@ -35,11 +36,24 @@ public class SpringSecurityConfiguration {
 	
 	@Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests((authz) -> authz.anyRequest().authenticated().and()).httpBasic().authenticationEntryPoint(entryPoint).and().csrf().disable();
-		
 		//without "and().csrf().disable()" you will get "Invalid CSRF token found for http://localhost:9090/myspringboot/user/delete/152"
 		//http.authorizeHttpRequests().anyRequest().authenticated().and().httpBasic().authenticationEntryPoint(entryPoint).and().csrf().disable();
-      
+		//http.authorizeHttpRequests((authz) -> authz.anyRequest().authenticated().and()).httpBasic().authenticationEntryPoint(entryPoint).and().csrf().disable();
+		
+		
+		//code from the lesson
+		/*http
+		.authorizeHttpRequests((authz) -> authz.anyRequest().authenticated().and())
+			                  .httpBasic().and().formLogin().loginPage("/user/login").permitAll().and().logout().permitAll();*/
+		
+		http
+		.authorizeHttpRequests((requests) -> requests
+	            .requestMatchers(new AntPathRequestMatcher("/user/login")).permitAll()
+	            .anyRequest().authenticated()) //other URLs are only allowed authenticated users.
+	    //.httpBasic().and().logout().permitAll().and()
+		.httpBasic().and().logout() .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/user/login")
+	    .and().csrf().disable();
+
         return http.build();
     }
 	
