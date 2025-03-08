@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.tour.model.Role;
@@ -38,8 +39,15 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User addUser(User user) {
+		String encodedPassword = new BCryptPasswordEncoder().encode(user.getPassword());
+		
+		boolean isMatch = new BCryptPasswordEncoder().matches(user.getPassword(), encodedPassword);
+		System.out.println("AAA, addUser, isMatch: " + isMatch);
+		
+		user.setPassword(encodedPassword);
 		Role role = roleRepository.findById(user.getRole().getId()).get();
 		user.setRole(role);
+		
 		return userRepository.save(user);
 	}
 

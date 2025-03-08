@@ -9,10 +9,15 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.tour.model.User;
 import com.tour.repository.UserRepository;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class MyUserDetailsService implements UserDetailsService{
@@ -23,9 +28,19 @@ public class MyUserDetailsService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userRepository.findByUsername(username);
+		
+		
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        String enteredPassword = request.getParameter("password");
+		boolean isMatch = new BCryptPasswordEncoder().matches(enteredPassword,user.getPassword());
+		if(isMatch) {
+			user.setPassword(enteredPassword);
+		}
+		
 		if(user == null) {
 			throw new UsernameNotFoundException("User name "+username+" not found");
 		}
+		
 		return new org.springframework.security.core.userdetails.User(user.getUserName(), "{noop}"+user.getPassword(), getGrantedAuthorities(user));
 	}
 	//if you don't add "{noop}", you will get:
