@@ -23,7 +23,7 @@
 	<form method="post" id="logoutForm" action="${path}/logout">
 		<input type="hidden" name="${_csrf.parameterName} value="${_csrf.token}"/>
 	</form>
-	<p>Welcome {pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()" >Logout</a></p>
+	<p>Welcome {pageContext.request.userPrincipal.name} | <a href="javascript:void(0);" onclick="document.forms['logoutForm'].submit()" >Logout</a></p>
 	${message}
 	<%-- ${path} --%>
 	<p><a href="${path}/user/list">User List</a></p>

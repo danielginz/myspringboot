@@ -60,12 +60,18 @@ public class SpringSecurityConfiguration {
 	            .requestMatchers(new AntPathRequestMatcher("/user/login")).permitAll()
 	            .anyRequest().authenticated()) //other URLs are only allowed authenticated users.
 				.httpBasic().and()
-				.logout(logout -> logout
-				        .logoutUrl("/logout") // Specifies the URL endpoint for logging out, so users will log out by accessing "/logout"
-				        .addLogoutHandler(logoutHandler) // Adds a custom logout handler (logoutHandler) to handle the logout process
-				        .logoutSuccessHandler(logoutSuccessHandler) // Specifies what to do after a successful logout, using a custom success handler
-				        .clearAuthentication(true).invalidateHttpSession(true).deleteCookies("JSESSIONID")
-				        .permitAll()) // Allows all users to access the logout endpoint without authentication
+				.logout(logout -> {
+					try {
+						logout
+						        .logoutUrl("/logout") // Specifies the URL endpoint for logging out, so users will log out by accessing "/logout"
+						        .addLogoutHandler(logoutHandler) // Adds a custom logout handler (logoutHandler) to handle the logout process
+						        .logoutSuccessHandler(logoutSuccessHandler) // Specifies what to do after a successful logout, using a custom success handler
+						        .clearAuthentication(true).invalidateHttpSession(true).deleteCookies("remember-me")
+						        .permitAll().and().rememberMe().tokenValiditySeconds(180);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}) // Allows all users to access the logout endpoint without authentication
 						
 				.formLogin().failureUrl("/user/login?error").and()
 				.csrf().disable();

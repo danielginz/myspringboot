@@ -13,8 +13,13 @@
 	<form action="${path}/user/login" method="post" class="form-signin">
 		<p style="color:red">${error}</p>
 		<p style="color:green">${message}</p>
-		<p>User Name : <input type="text" name="username" placeholder="Enter User Name"/></p>
-		<p>Password : <input type="password" name="password" placeholder="Password"/></p>
+		<p><input type="text" name="username" placeholder="Enter User Name"/></p>
+		<p><input type="password" name="password" placeholder="Password"/></p>
+		<p>
+			<input type="checkbox" name="remember-me" id="remember-me"/>
+			<label>Remember Me</label>
+		</p>
+		
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 		<p><button type="submit">Login</button></p>
 	</form>

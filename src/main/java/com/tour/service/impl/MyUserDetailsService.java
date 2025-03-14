@@ -31,14 +31,17 @@ public class MyUserDetailsService implements UserDetailsService{
 		
 		
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        String enteredPassword = request.getParameter("password");
-		boolean isMatch = new BCryptPasswordEncoder().matches(enteredPassword,user.getPassword());
-		if(isMatch) {
-			user.setPassword(enteredPassword);
-		}
+        String rawPassword = request.getParameter("password");
 		
 		if(user == null) {
 			throw new UsernameNotFoundException("User name "+username+" not found");
+		} else if(rawPassword == null || rawPassword.isBlank()) {
+		    throw new IllegalArgumentException("Password can't be empty");
+		} else {
+			boolean isMatch = new BCryptPasswordEncoder().matches(rawPassword,user.getPassword());
+			if(isMatch) {
+				user.setPassword(rawPassword);
+			}
 		}
 		
 		return new org.springframework.security.core.userdetails.User(user.getUserName(), "{noop}"+user.getPassword(), getGrantedAuthorities(user));
