@@ -57,7 +57,8 @@ public class SpringSecurityConfiguration {
 		
 		http
 		.authorizeHttpRequests((requests) -> requests
-	            .requestMatchers(new AntPathRequestMatcher("/user/login")).permitAll()
+				.requestMatchers("/webjars/**").permitAll()
+	            .requestMatchers("/user/login").permitAll()
 	            .anyRequest().authenticated()) //other URLs are only allowed authenticated users.
 				.httpBasic().and()
 				.logout(logout -> {
@@ -73,12 +74,37 @@ public class SpringSecurityConfiguration {
 					}
 				}) // Allows all users to access the logout endpoint without authentication
 						
-				.formLogin().failureUrl("/user/login?error").and()
+				.formLogin()
+				.failureUrl("/user/login?error").and()
 				.csrf().disable();
 		
+		 return http.build();
 		
 		
-        return http.build();
+
+		//it's not working
+		/*http
+        .authorizeRequests()
+            .requestMatchers("/webjars/**").permitAll()
+            .anyRequest().authenticated()
+            .and()
+        .formLogin()
+            .loginPage("/user/login")
+            .defaultSuccessUrl("/", true)
+            .failureUrl("/user/login?error")
+            .permitAll()
+            .and()
+        .logout()
+            .logoutUrl("/logout")
+            .logoutSuccessUrl("/custom-login")
+            .permitAll();
+		return http.build();*/
+		
+		
+		
+		
+		
+       
         
     }
 	

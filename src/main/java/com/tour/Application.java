@@ -19,6 +19,8 @@ public class Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
+		//https://www.youtube.com/watch?v=_RaVRqfpjZo
+		//https://www.youtube.com/watch?v=6QKuLBrlm5I
 	}
 
 }
