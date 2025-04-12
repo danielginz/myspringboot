@@ -9,6 +9,8 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<link rel="stylesheet" href="${path}/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
 		<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+		<script type="text/javascript" src="${path}/webjars/jquery/3.7.1/jquery.min.js"></script>
+		<script type="text/javascript" src="${path}/jquery.boot.js"></script>
 		<title>Welcome</title>
 		<style>
 			/* .row {
@@ -59,12 +61,13 @@
   					</div>
 		    </nav>
 		    
+		    <!-- <div class="row"> -->
 			<div class="aaa">
 				<div class="menu navbar navbar-default">
 					<div class="menu-container">
 						<ul class="nav navbar-nav">
-								<li><a href="${path}/user/list"><span class="glyphicon glyphicon-user"></span>User List</a></li>
-								<li><a href="${path}/address/list"><span class="glyphicon glyphicon-info-sign"></span>Address List</a></li>
+								<li><a href="javascript:void(0);" id="userList"><span class="glyphicon glyphicon-user"></span>User List</a></li>
+								<li><a href="javascript:void(0);" id="addressList"><span class="glyphicon glyphicon-info-sign"></span>Address List</a></li>
 						</ul>
 					</div>
 				</div>
