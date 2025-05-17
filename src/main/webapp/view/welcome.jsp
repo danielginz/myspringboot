@@ -84,7 +84,7 @@
 			</div>
 			<div class="navbar navbar-default navbar-fixed-bottom">
 		    	<div class="container">
-		    		<div class="col-md-10 navbar-text text-center">© 2025-26, All Rights Reserved by Tour Java</div>
+		    		<div class="col-md-10 navbar-text text-center">© 2025-26, All Rights Reserved by Java Tour</div>
 		    	</div>
 		    </div>			
 		</c:if>

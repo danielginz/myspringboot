@@ -9,6 +9,24 @@ $(function() {
 	});
 });
 
+function addForm(type) {
+	modifyData("/myspringboot/"+type+"/form");
+}
+
+function editForm(type, id) {
+	modifyData("/myspringboot/"+type+"/edit/"+id);
+}
+	
+function modifyData(url) {
+	$.ajax({
+		type : "GET",
+		url : url,
+		success : function(data) {
+			$(".panel-body").html(data);
+		}
+	});		
+}	
+	
 function fetchList(type) {
 	$.ajax({
 		type : "GET",

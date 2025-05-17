@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
 		boolean isMatch = new BCryptPasswordEncoder().matches(user.getPassword(), encodedPassword);
 		System.out.println("AAA, addUser, isMatch: " + isMatch);
 		
-		user.setPassword(encodedPassword);
+		user.setPassword(encodedPassword);//TODO if isMatch==true don't update password
 		Role role = roleRepository.findById(user.getRole().getId()).get();
 		user.setRole(role);
 		
